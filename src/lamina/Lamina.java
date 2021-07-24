@@ -5,22 +5,34 @@
  */
 package lamina;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import sun.util.locale.provider.JRELocaleConstants;
 
@@ -94,7 +106,7 @@ public class Lamina extends JPanel {
         //Grupo
         grupoTipo = new ButtonGroup();
         //RadioButton
-        mensaje = new JRadioButton("Mensaje");
+        mensaje = new JRadioButton("Mensaje", true);
         confirmar = new JRadioButton("Confirmar");
         opcion = new JRadioButton("Opción");
         entrada = new JRadioButton("Entrada");
@@ -107,7 +119,7 @@ public class Lamina extends JPanel {
         cajaTipo = Box.createVerticalBox();
         //Le ponemos un borde a nuestra caja
         cajaTipo.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), tipo.getText()));
-      
+
         //Especificamos la distancia entre los componentes
         cajaTipo.add(Box.createVerticalStrut(5));
         //Metodo para pintar el margen de la caja
@@ -130,7 +142,7 @@ public class Lamina extends JPanel {
         grupoMensaje = new ButtonGroup();
         //Creamos los RadioButton
         //error, informacion, advertencia, pregunta, planoM
-        error = new JRadioButton("ERROR_MESSAGE");
+        error = new JRadioButton("ERROR_MESSAGE", true);
         informacion = new JRadioButton("INFORMATION_MESSAGE");
         advertencia = new JRadioButton("WARNING_MESSAGE");
         pregunta = new JRadioButton("QUESTION_MESSAGE");
@@ -147,7 +159,7 @@ public class Lamina extends JPanel {
         cajaTipoMensaje.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), tipoMensaje.getText()));
         cajaTipoMensaje.add(Box.createVerticalStrut(5));
         //Agregamos los componentes a nuestra caja
-      //  cajaTipoMensaje.add(tipoMensaje);
+        //  cajaTipoMensaje.add(tipoMensaje);
         cajaTipoMensaje.add(error);
         cajaTipoMensaje.add(informacion);
         cajaTipoMensaje.add(advertencia);
@@ -163,7 +175,7 @@ public class Lamina extends JPanel {
         mensajeIm.setPreferredSize(mensajeIm.getPreferredSize());
         grupoMens = new ButtonGroup();
         //cadena, icono, componentes, otros, listObj;
-        cadena = new JRadioButton("Cadena");
+        cadena = new JRadioButton("Cadena", true);
         icono = new JRadioButton("Icono");
         componente = new JRadioButton("Componente");
         otros = new JRadioButton("Otros");
@@ -178,7 +190,7 @@ public class Lamina extends JPanel {
         cajaMensaje = Box.createVerticalBox();
         cajaMensaje.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), mensajeIm.getText()));
         cajaMensaje.add(Box.createVerticalStrut(5));
-       // cajaMensaje.add(mensajeIm);
+        // cajaMensaje.add(mensajeIm);
         cajaMensaje.add(cadena);
         cajaMensaje.add(icono);
         cajaMensaje.add(componente);
@@ -192,7 +204,7 @@ public class Lamina extends JPanel {
         grupoConfirmar = new ButtonGroup();
         //Botones
         // defaultOp, yesNo, yesNoOp, okCancel
-        defaultOp = new JRadioButton("DEFAULT_OPTION");
+        defaultOp = new JRadioButton("DEFAULT_OPTION", true);
         yesNo = new JRadioButton("YES_NO_OPTION");
         yesNoOp = new JRadioButton("YES_NO_CANCEL_OPTION");
         okCancel = new JRadioButton("OK_CANCEL_OPTION");
@@ -206,7 +218,7 @@ public class Lamina extends JPanel {
         cajaConfirmar.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), mensajeConfirmar.getText()));
         cajaConfirmar.add(Box.createVerticalStrut(5));
 
-        cajaConfirmar.add(mensajeConfirmar);
+        //cajaConfirmar.add(mensajeConfirmar);
         cajaConfirmar.add(defaultOp);
         cajaConfirmar.add(yesNo);
         cajaConfirmar.add(yesNoOp);
@@ -219,7 +231,7 @@ public class Lamina extends JPanel {
         mensajeOpcion.setMaximumSize(mensajeOpcion.getPreferredSize());
         grupoOpcion = new ButtonGroup();
 
-        listSring = new JRadioButton("String[]");
+        listSring = new JRadioButton("String[]", true);
         listIcon = new JRadioButton("Icon[]");
         objList = new JRadioButton("Object[]");
 
@@ -241,7 +253,7 @@ public class Lamina extends JPanel {
         mensajeEntrada = new JLabel("Entrada");
         mensajeEntrada.setMaximumSize(mensajeEntrada.getPreferredSize());
         grupoEntrada = new ButtonGroup();
-        campoTexto = new JRadioButton("Campo de Texto");
+        campoTexto = new JRadioButton("Campo de Texto", true);
         combo = new JRadioButton("Combo");
         grupoEntrada.add(campoTexto);
         grupoEntrada.add(combo);
@@ -250,7 +262,7 @@ public class Lamina extends JPanel {
         cajaEntrada = Box.createVerticalBox();
         cajaEntrada.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), mensajeEntrada.getText()));
         cajaEntrada.add(Box.createVerticalStrut(5));
-     //   cajaEntrada.add(mensajeEntrada);
+        //   cajaEntrada.add(mensajeEntrada);
         cajaEntrada.add(campoTexto);
         cajaEntrada.add(combo);
 
@@ -261,6 +273,7 @@ public class Lamina extends JPanel {
 
         //Boton para mostrar el mensaje
         mostrar = new JButton("Mostrar");
+        mostrar.addActionListener(new EventoDialogo());
         //Agregamos nuestro boton a la lamina superior
         lamina3.add(mostrar, BorderLayout.CENTER);
         //Agregamos las laminas
@@ -269,12 +282,199 @@ public class Lamina extends JPanel {
 
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        Rectangle2D rectangulo = new Rectangle2D.Double(100, 100, 200, 150);
+    private int mensajeTipo() {
 
-        //  this.cajaTipo.paintComponents(g2);
+        if (error.isSelected()) {
+            return 0;
+        } else if (informacion.isSelected()) {
+            return 1;
+        } else if (advertencia.isSelected()) {
+            return 2;
+        } else if (pregunta.isSelected()) {
+            return 3;
+        } else {
+            return -1;
+        }
     }
+
+    private int mensajeConfirmar() {
+        //defaultOp, yesNo, yesNoOp, okCancel;
+        if (defaultOp.isSelected()) {
+            return JOptionPane.DEFAULT_OPTION;
+        } else if (yesNo.isSelected()) {
+            return JOptionPane.YES_NO_OPTION;
+        } else if (yesNoOp.isSelected()) {
+            return JOptionPane.YES_NO_CANCEL_OPTION;
+        } else {
+            return JOptionPane.OK_CANCEL_OPTION;
+        }
+    }
+
+    private Object[] objetos() {
+        //listSring, listIcon, objList
+        Object[] arreglo = null;
+        if (listSring.isSelected()) {
+            arreglo = new Object[]{"Rojo", "Azul", "Negro"};
+
+        } else if (listIcon.isSelected()) {
+            arreglo = new Object[]{new ImageIcon("src/azul.png"), new ImageIcon("src/rojo.png"), new ImageIcon("src/amarillo.png")};
+
+        } else {
+            ImageIcon ic = new ImageIcon("src/azul.png");
+            JPanel l = new JPanel();
+            l.setBackground(Color.yellow);
+            Date fecha = new Date();
+            arreglo = new Object[]{"Cadena", ic, l, fecha};
+
+        }
+        return arreglo;
+    }
+
+    private Object[] objetosEntrada() {
+        //  JComboBox grupo = null;
+        Object[] arreglo = null;
+        if (combo.isSelected()) {
+            arreglo = new Object[]{"Rojo", "Azul", "Amarillo"};
+        }
+        if(campoTexto.isSelected()){
+        
+      
+        }
+
+        return arreglo;
+    }
+
+    private class EventoDialogo implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int n = mensajeTipo();
+            int m = mensajeConfirmar();
+            ImageIcon ic = new ImageIcon("src/azul.png");
+            JPanel l = new JPanel();
+            l.setBackground(Color.yellow);
+            Date fecha = new Date();
+            Object[] lista = objetos();
+            Object[] b = objetosEntrada();
+            if (e.getSource() == mostrar) {
+                //Opción Mensaje
+                if (mensaje.isSelected()) {
+
+                    //opción para la cadena
+                    if (cadena.isSelected()) {
+
+                        JOptionPane.showMessageDialog(Lamina.this, cadena.getText(), "Mensaje", n);
+                    }
+                    //Icono
+                    if (icono.isSelected()) {
+                        JOptionPane.showMessageDialog(Lamina.this, ic, "Mensaje", n);
+                    }
+                    //Componente
+                    if (componente.isSelected()) {
+
+                        JOptionPane.showMessageDialog(Lamina.this, l, "Mensaje", n);
+                    }
+                    if (otros.isSelected()) {
+                        JOptionPane.showMessageDialog(Lamina.this, fecha, "Mensaje", n);
+                    }
+                    if (listObj.isSelected()) {
+                        String cadena = "Cadena";
+                        Object[] arreglo = {cadena, ic, l, fecha};
+
+                        JOptionPane.showMessageDialog(Lamina.this, arreglo, "Mensaje", n);
+                    }
+                } //Opción Confirmar
+                else if (confirmar.isSelected()) {
+
+                    //opción para la cadena
+                    if (cadena.isSelected()) {
+                        JOptionPane.showOptionDialog(Lamina.this, cadena.getText(), "Opción", m, n, null, null, null);
+
+                        //JOptionPane.showMessageDialog(Lamina.this, cadena.getText(), "Mensaje", n);
+                    }
+                    //Icono
+                    if (icono.isSelected()) {
+                        JOptionPane.showOptionDialog(Lamina.this, ic, "Opción", m, n, null, null, null);
+
+                    }
+                    //Componente
+                    if (componente.isSelected()) {
+
+                        JOptionPane.showOptionDialog(Lamina.this, l, "Opción", m, n, null, null, null);
+
+                    }
+                    if (otros.isSelected()) {
+                        JOptionPane.showOptionDialog(Lamina.this, fecha, "Opción", m, n, null, null, null);
+
+                    }
+                    if (listObj.isSelected()) {
+                        String cadena = "Cadena";
+                        Object[] arreglo = {cadena, ic, l, fecha};
+
+                        JOptionPane.showOptionDialog(Lamina.this, arreglo, "Opción", m, n, null, null, null);
+
+                    }
+                } //Opción "Opción"
+                else if (opcion.isSelected()) {
+                    //opción para la cadena
+                    if (cadena.isSelected()) {
+                        JOptionPane.showOptionDialog(Lamina.this, cadena.getText(), "Opción", m, n, null, lista, null);
+
+                        //JOptionPane.showMessageDialog(Lamina.this, cadena.getText(), "Mensaje", n);
+                    }
+                    //Icono
+                    if (icono.isSelected()) {
+                        JOptionPane.showOptionDialog(Lamina.this, ic, "Opción", m, n, null, lista, null);
+
+                    }
+                    //Componente
+                    if (componente.isSelected()) {
+
+                        JOptionPane.showOptionDialog(Lamina.this, l, "Opción", m, n, null, lista, null);
+
+                    }
+                    if (otros.isSelected()) {
+                        JOptionPane.showOptionDialog(Lamina.this, fecha, "Opción", m, n, null, lista, null);
+
+                    }
+                    if (listObj.isSelected()) {
+                        String cadena = "Cadena";
+                        Object[] arreglo = {cadena, ic, l, fecha};
+
+                        JOptionPane.showOptionDialog(Lamina.this, arreglo, "Opción", m, n, null, lista, null);
+
+                    }
+                } else {
+                    if (cadena.isSelected()) {
+                        JOptionPane.showInputDialog(Lamina.this, cadena.getText(), "Entrada", n, null, b, null);
+                        //JOptionPane.showMessageDialog(Lamina.this, cadena.getText(), "Mensaje", n);
+                    }
+                    //Icono
+                    if (icono.isSelected()) {
+                        JOptionPane.showInputDialog(Lamina.this, ic, "Entrada", n, null, b, null);
+
+                    }
+                    //Componente
+                    if (componente.isSelected()) {
+                        JOptionPane.showInputDialog(Lamina.this, l, "Entrada", n, null, b, null);
+                    }
+                    if (otros.isSelected()) {
+                        JOptionPane.showInputDialog(Lamina.this, fecha, "Entrada", n, null, b, null);
+
+                    }
+                    if (listObj.isSelected()) {
+                        String cadena = "Cadena";
+                        Object[] arreglo = {cadena, ic, l, fecha};
+
+                        JOptionPane.showInputDialog(Lamina.this, arreglo, "Entrada", n, null, b, null);
+
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
 }
